@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # DriveCare React UI
 
 ## Requirements
@@ -35,3 +36,6 @@ The archive intentionally excludes `node_modules` and `dist`. Dependencies are i
 - “Book an Appointment” vehicle-service call-to-action in the navbar
 - Mobile menu button appears only at 960px and below
 - Hero text remains fixed while only the admin-controlled image changes
+=======
+# Asian-Auto-Clean-Park
+>>>>>>> f5082cf5b1017aa9e3d6874f218603f77cd0ae3f

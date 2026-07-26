@@ -1,21 +1,31 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   AirVent,
+  AlertCircle,
+  Banknote,
   ArrowLeft,
   ArrowRight,
   BadgeCheck,
   CalendarDays,
+  Check,
+  CheckCircle2,
   Car,
+  ChevronDown,
+  ChevronLeft,
   ChevronRight,
   CircleCheck,
   ClipboardCheck,
   Clock3,
+  CreditCard,
   Cog,
+  FileText,
   Gauge,
   Globe,
   Camera,
   Play,
   Send,
+  LockKeyhole,
+  Mail,
   MapPin,
   Menu,
   MessageCircle,
@@ -28,6 +38,8 @@ import {
   SlidersHorizontal,
   Tag,
   ThumbsUp,
+  UploadCloud,
+  User,
   UserRound,
   Wrench,
   X,
@@ -42,6 +54,7 @@ const services = [
     description: "High quality oil change service for smooth performance.",
     image: "/assets/service-oil.jpg",
     icon: Wrench,
+    price: 8500,
   },
   {
     id: 2,
@@ -50,6 +63,7 @@ const services = [
       "Ensure your safety with our expert brake inspection & repair.",
     image: "/assets/service-brakes.jpg",
     icon: CircleCheck,
+    price: 12000,
   },
   {
     id: 3,
@@ -57,6 +71,7 @@ const services = [
     description: "Advanced scanning & diagnostics for all vehicle problems.",
     image: "/assets/service-diagnostics.jpg",
     icon: Gauge,
+    price: 5000,
   },
   {
     id: 4,
@@ -64,6 +79,7 @@ const services = [
     description: "Keep your drive cool with our AC check & regular service.",
     image: "/assets/service-ac.jpg",
     icon: AirVent,
+    price: 10000,
   },
   {
     id: 5,
@@ -72,6 +88,7 @@ const services = [
       "Precise wheel alignment for better handling & longer tyre life.",
     image: "/assets/service-alignment.jpg",
     icon: SlidersHorizontal,
+    price: 6500,
   },
   {
     id: 6,
@@ -80,6 +97,7 @@ const services = [
       "Battery testing, terminal cleaning, charging and reliable replacement.",
     image: "/assets/service-diagnostics.jpg",
     icon: PackageCheck,
+    price: 7500,
   },
   {
     id: 7,
@@ -88,6 +106,7 @@ const services = [
       "Professional tyre replacement and wheel balancing for a smoother drive.",
     image: "/assets/service-alignment.jpg",
     icon: CircleCheck,
+    price: 9500,
   },
   {
     id: 8,
@@ -96,6 +115,7 @@ const services = [
       "Inspection and repair of shocks, steering parts and suspension systems.",
     image: "/assets/service-brakes.jpg",
     icon: Cog,
+    price: 15000,
   },
   {
     id: 9,
@@ -104,6 +124,7 @@ const services = [
       "Transmission inspection, fluid replacement and performance maintenance.",
     image: "/assets/service-oil.jpg",
     icon: Gauge,
+    price: 18000,
   },
   {
     id: 10,
@@ -112,6 +133,7 @@ const services = [
       "Complete exterior wash, interior cleaning and professional detailing.",
     image: "/assets/hero-mechanics-2.jpg",
     icon: Sparkles,
+    price: 7000,
   },
   {
     id: 11,
@@ -120,6 +142,7 @@ const services = [
       "Diagnosis and repair of lights, wiring, charging and starting systems.",
     image: "/assets/service-diagnostics.jpg",
     icon: Wrench,
+    price: 8000,
   },
   {
     id: 12,
@@ -128,6 +151,7 @@ const services = [
       "Cooling-system inspection, coolant replacement and radiator servicing.",
     image: "/assets/service-ac.jpg",
     icon: AirVent,
+    price: 11000,
   },
 ];
 
@@ -276,6 +300,7 @@ export default function App() {
   const [testimonialPage, setTestimonialPage] = useState(0);
   const [heroSlide, setHeroSlide] = useState(0);
   const [showAllServices, setShowAllServices] = useState(false);
+  const [bookingOpen, setBookingOpen] = useState(false);
 
   const cartCount = useMemo(
     () => cart.reduce((sum, item) => sum + item.quantity, 0),
@@ -359,6 +384,16 @@ export default function App() {
                   <span>{label}</span>
                 </button>
               ))}
+              <button
+                className="mobile-booking-nav-button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  setBookingOpen(true);
+                }}
+              >
+                <CalendarDays size={17} />
+                Book an Appointment
+              </button>
             </nav>
           </div>
 
@@ -380,16 +415,7 @@ export default function App() {
             </button>
             <button
               className="header-book-button"
-              onClick={() => {
-                scrollTo("#services");
-                window.setTimeout(
-                  () =>
-                    showNotice(
-                      "Select a service to book an appointment for your vehicle",
-                    ),
-                  450,
-                );
-              }}
+              onClick={() => setBookingOpen(true)}
             >
               <CalendarDays size={17} />
               Book an Appointment
@@ -1008,18 +1034,18 @@ export default function App() {
         )}
       </aside>
 
+      <BookingModal
+        open={bookingOpen}
+        onClose={() => setBookingOpen(false)}
+        services={services}
+      />
+
       {notice && (
         <div className="toast">
           <CircleCheck />
           {notice}
         </div>
       )}
-      <button
-        className="floating-chat"
-        onClick={() => showNotice("Live support is ready to help")}
-      >
-        <MessageCircle />
-      </button>
     </div>
   );
 }
@@ -1120,3 +1146,1084 @@ function FooterLinks({ title, links }) {
     </div>
   );
 }
+
+const BOOKING_TIME_SLOTS = [
+  { value: "08:00", label: "8:00 AM" },
+  { value: "09:00", label: "9:00 AM" },
+  { value: "10:00", label: "10:00 AM" },
+  { value: "11:00", label: "11:00 AM" },
+  { value: "12:00", label: "12:00 PM" },
+  { value: "13:00", label: "1:00 PM" },
+  { value: "14:00", label: "2:00 PM" },
+  { value: "15:00", label: "3:00 PM" },
+  { value: "16:00", label: "4:00 PM" },
+  { value: "17:00", label: "5:00 PM" },
+];
+
+const EMPTY_BOOKING_FORM = {
+  serviceId: "",
+  name: "",
+  email: "",
+  contactNumber: "",
+  address: "",
+  bookingDate: "",
+  timeSlot: "",
+  paymentMethod: "",
+  cardholderName: "",
+  cardNumber: "",
+  expiry: "",
+  cvv: "",
+  bankSlip: null,
+};
+
+function toLocalDateKey(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function formatBookingDate(dateKey) {
+  if (!dateKey) return "Not selected";
+  return new Intl.DateTimeFormat("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date(`${dateKey}T12:00:00`));
+}
+
+function formatTimeSlot(value) {
+  return BOOKING_TIME_SLOTS.find((slot) => slot.value === value)?.label || value;
+}
+
+function formatServicePrice(value) {
+  const amount = Number(value || 0);
+  return `Rs. ${new Intl.NumberFormat("en-US").format(amount)}`;
+}
+
+function BookingModal({ open, onClose, services }) {
+  const [step, setStep] = useState(1);
+  const [form, setForm] = useState(EMPTY_BOOKING_FORM);
+  const [errors, setErrors] = useState({});
+  const [now, setNow] = useState(new Date());
+  const [calendarMonth, setCalendarMonth] = useState(
+    () => new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+  );
+  const [bookings, setBookings] = useState([]);
+  const [success, setSuccess] = useState(false);
+  const [bookingReference, setBookingReference] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [serviceMenuOpen, setServiceMenuOpen] = useState(false);
+  const serviceSelectRef = useRef(null);
+
+  const bookingServices = useMemo(
+    () => [
+      {
+        id: "full-vehicle-service",
+        title: "Full Vehicle Service",
+        description:
+          "Complete scheduled maintenance, inspection and essential servicing.",
+        price: 25000,
+      },
+      ...services,
+    ],
+    [services],
+  );
+
+  const selectedService = bookingServices.find(
+    (service) => String(service.id) === String(form.serviceId),
+  );
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    setStep(1);
+    setForm(EMPTY_BOOKING_FORM);
+    setErrors({});
+    setSuccess(false);
+    setSubmitting(false);
+    setBookingReference("");
+    setServiceMenuOpen(false);
+    const current = new Date();
+    setNow(current);
+    setCalendarMonth(new Date(current.getFullYear(), current.getMonth(), 1));
+
+    try {
+      const stored = JSON.parse(
+        window.localStorage.getItem("aacp_service_bookings") || "[]",
+      );
+      setBookings(Array.isArray(stored) ? stored : []);
+    } catch {
+      setBookings([]);
+    }
+
+    return undefined;
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape" && !submitting) onClose();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open, onClose, submitting]);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const timer = window.setInterval(() => setNow(new Date()), 30000);
+    return () => window.clearInterval(timer);
+  }, [open]);
+
+  useEffect(() => {
+    if (!serviceMenuOpen) return undefined;
+
+    const handlePointerDown = (event) => {
+      if (!serviceSelectRef.current?.contains(event.target)) {
+        setServiceMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [serviceMenuOpen]);
+
+  const calendarDays = useMemo(() => {
+    const year = calendarMonth.getFullYear();
+    const month = calendarMonth.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const gridStart = new Date(year, month, 1 - firstDay.getDay());
+
+    return Array.from({ length: 42 }, (_, index) => {
+      const date = new Date(gridStart);
+      date.setDate(gridStart.getDate() + index);
+      return date;
+    });
+  }, [calendarMonth]);
+
+  const combinedBookings = useMemo(() => {
+    const liveSlots =
+      typeof window !== "undefined" &&
+      Array.isArray(window.__AACP_BOOKED_SLOTS__)
+        ? window.__AACP_BOOKED_SLOTS__
+        : [];
+    return [...bookings, ...liveSlots];
+  }, [bookings, now]);
+
+  if (!open) return null;
+
+  const todayKey = toLocalDateKey(now);
+  const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const canGoToPreviousMonth = calendarMonth > currentMonthStart;
+
+  const getSlotState = (dateKey, timeValue) => {
+    if (!dateKey) return "waiting";
+    if (dateKey < todayKey) return "booked";
+
+    const slotDate = new Date(`${dateKey}T${timeValue}:00`);
+    if (slotDate.getTime() <= now.getTime() + 30 * 60 * 1000) {
+      return "booked";
+    }
+
+    const isBooked = combinedBookings.some(
+      (booking) =>
+        booking.bookingDate === dateKey &&
+        booking.timeSlot === timeValue &&
+        booking.status !== "cancelled" &&
+        booking.status !== "rejected",
+    );
+
+    return isBooked ? "booked" : "available";
+  };
+
+  const isSlotUnavailable = (dateKey, timeValue) =>
+    getSlotState(dateKey, timeValue) !== "available";
+
+  const isDayUnavailable = (dateKey) =>
+    dateKey < todayKey ||
+    BOOKING_TIME_SLOTS.every((slot) =>
+      isSlotUnavailable(dateKey, slot.value),
+    );
+
+  const updateField = (field, value) => {
+    setForm((current) => ({ ...current, [field]: value }));
+    setErrors((current) => ({ ...current, [field]: "" }));
+  };
+
+  const validateStepOne = () => {
+    const nextErrors = {};
+    if (!form.serviceId) nextErrors.serviceId = "Please select a service.";
+    if (!form.name.trim()) nextErrors.name = "Name is required.";
+    if (!/^\S+@\S+\.\S+$/.test(form.email.trim()))
+      nextErrors.email = "Enter a valid email address.";
+    const contactDigits = form.contactNumber.replace(/\D/g, "");
+    if (contactDigits.length < 9 || contactDigits.length > 15)
+      nextErrors.contactNumber = "Enter a valid contact number.";
+    if (!form.address.trim()) nextErrors.address = "Address is required.";
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
+
+  const validateStepTwo = () => {
+    const nextErrors = {};
+    if (!form.bookingDate) nextErrors.bookingDate = "Select a booking date.";
+    if (!form.timeSlot) nextErrors.timeSlot = "Select an available time slot.";
+    if (
+      form.bookingDate &&
+      form.timeSlot &&
+      isSlotUnavailable(form.bookingDate, form.timeSlot)
+    ) {
+      nextErrors.timeSlot = "This time slot is no longer available.";
+    }
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
+
+  const isValidExpiry = (value) => {
+    if (!/^\d{2}\/\d{2}$/.test(value)) return false;
+    const [month, year] = value.split("/").map(Number);
+    if (month < 1 || month > 12) return false;
+    const fullYear = 2000 + year;
+    const expiryDate = new Date(fullYear, month, 0, 23, 59, 59);
+    return expiryDate >= now;
+  };
+
+  const validateStepThree = () => {
+    const nextErrors = {};
+    if (!form.paymentMethod)
+      nextErrors.paymentMethod = "Choose a payment option.";
+
+    if (form.paymentMethod === "card") {
+      const cardDigits = form.cardNumber.replace(/\D/g, "");
+      if (!form.cardholderName.trim())
+        nextErrors.cardholderName = "Cardholder name is required.";
+      if (cardDigits.length < 13 || cardDigits.length > 19)
+        nextErrors.cardNumber = "Enter a valid card number.";
+      if (!isValidExpiry(form.expiry))
+        nextErrors.expiry = "Enter a valid future expiry date.";
+      if (!/^\d{3,4}$/.test(form.cvv))
+        nextErrors.cvv = "Enter a valid CVV.";
+    }
+
+    if (form.paymentMethod === "bank" && !form.bankSlip) {
+      nextErrors.bankSlip = "Upload the bank transfer receipt.";
+    }
+
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
+
+  const goNext = () => {
+    if (step === 1 && !validateStepOne()) return;
+    if (step === 2 && !validateStepTwo()) return;
+    setStep((current) => Math.min(current + 1, 3));
+  };
+
+  const handleBankSlip = (file) => {
+    if (!file) return;
+    const allowedTypes = [
+      "application/pdf",
+      "image/png",
+      "image/jpeg",
+      "image/jpg",
+    ];
+    if (!allowedTypes.includes(file.type)) {
+      setErrors((current) => ({
+        ...current,
+        bankSlip: "Upload a PDF, PNG, JPG or JPEG file.",
+      }));
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setErrors((current) => ({
+        ...current,
+        bankSlip: "The receipt must be smaller than 5 MB.",
+      }));
+      return;
+    }
+    updateField("bankSlip", file);
+  };
+
+  const submitBooking = () => {
+    if (!validateStepThree()) return;
+    setSubmitting(true);
+
+    window.setTimeout(() => {
+      const reference = `AACP-${Date.now().toString().slice(-8)}`;
+      const cardDigits = form.cardNumber.replace(/\D/g, "");
+      const safeBooking = {
+        id: reference,
+        serviceId: form.serviceId,
+        service: selectedService?.title || "Vehicle Service",
+        servicePrice: selectedService?.price || 0,
+        name: form.name.trim(),
+        email: form.email.trim(),
+        contactNumber: form.contactNumber.trim(),
+        address: form.address.trim(),
+        bookingDate: form.bookingDate,
+        timeSlot: form.timeSlot,
+        paymentMethod: form.paymentMethod,
+        paymentReference:
+          form.paymentMethod === "card"
+            ? `Card ending ${cardDigits.slice(-4)}`
+            : form.bankSlip?.name || "Bank transfer receipt",
+        status: "pending",
+        createdAt: new Date().toISOString(),
+      };
+
+      const updatedBookings = [...bookings, safeBooking];
+      setBookings(updatedBookings);
+      try {
+        window.localStorage.setItem(
+          "aacp_service_bookings",
+          JSON.stringify(updatedBookings),
+        );
+      } catch {
+      }
+
+      setBookingReference(reference);
+      setSubmitting(false);
+      setSuccess(true);
+    }, 850);
+  };
+
+  const selectDate = (date) => {
+    const dateKey = toLocalDateKey(date);
+    if (isDayUnavailable(dateKey)) return;
+    updateField("bookingDate", dateKey);
+    updateField("timeSlot", "");
+  };
+
+  const formatCardNumber = (value) =>
+    value
+      .replace(/\D/g, "")
+      .slice(0, 19)
+      .replace(/(.{4})/g, "$1 ")
+      .trim();
+
+  const formatExpiry = (value) => {
+    const digits = value.replace(/\D/g, "").slice(0, 4);
+    return digits.length > 2
+      ? `${digits.slice(0, 2)}/${digits.slice(2)}`
+      : digits;
+  };
+
+  const closeModal = () => {
+    if (!submitting) onClose();
+  };
+
+  return (
+    <div
+      className="appointment-modal-backdrop is-open"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) closeModal();
+      }}
+      role="presentation"
+    >
+      <section
+        className="appointment-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="appointment-modal-title"
+      >
+        <div className="appointment-modal-accent" />
+        <header className="appointment-modal-header">
+          <div>
+            <span className="appointment-modal-kicker">
+              <CalendarDays size={15} /> Online Service Booking
+            </span>
+            <h2 id="appointment-modal-title">
+              {success ? "Appointment Submitted" : "Book an Appointment"}
+            </h2>
+            <p>
+              {success
+                ? "Your booking is waiting for administrator approval."
+                : "Complete the three steps to reserve your service time."}
+            </p>
+          </div>
+          <button
+            className="appointment-modal-close"
+            onClick={closeModal}
+            aria-label="Close appointment popup"
+          >
+            <X size={20} />
+          </button>
+        </header>
+
+        {!success && (
+          <div className="appointment-progress" aria-label="Booking progress">
+            {[
+              [1, "Your Details"],
+              [2, "Date & Time"],
+              [3, "Payment"],
+            ].map(([number, label]) => (
+              <div
+                className={`appointment-progress-step ${
+                  step === number ? "is-current" : ""
+                } ${step > number ? "is-complete" : ""}`}
+                key={number}
+              >
+                <span>{step > number ? <Check size={15} /> : number}</span>
+                <small>{label}</small>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="appointment-modal-scroll">
+          {success ? (
+            <div className="appointment-success">
+              <div className="appointment-success-icon">
+                <CheckCircle2 size={42} />
+              </div>
+              <span className="appointment-status-badge">Status: Pending</span>
+              <h3>Your booking was submitted successfully.</h3>
+              <p>
+                The administrator will verify your payment and approve the
+                service appointment. You will be contacted after review.
+              </p>
+
+              <div className="appointment-success-summary">
+                <div>
+                  <span>Booking Reference</span>
+                  <strong>{bookingReference}</strong>
+                </div>
+                <div>
+                  <span>Customer</span>
+                  <strong>{form.name}</strong>
+                </div>
+                <div>
+                  <span>Service</span>
+                  <strong>
+                    {selectedService?.title} · {formatServicePrice(selectedService?.price)}
+                  </strong>
+                </div>
+                <div>
+                  <span>Date & Time</span>
+                  <strong>
+                    {formatBookingDate(form.bookingDate)} · {formatTimeSlot(form.timeSlot)}
+                  </strong>
+                </div>
+              </div>
+
+              <button
+                className="button button-primary appointment-success-button"
+                onClick={closeModal}
+              >
+                Done
+              </button>
+            </div>
+          ) : (
+            <div className="appointment-step-panel" key={step}>
+              {step === 1 && (
+                <div className="appointment-form-section">
+                  <div className="appointment-form-grid">
+                    <AppointmentField
+                      label="Select Service"
+                      error={errors.serviceId}
+                      fullWidth
+                      asDiv
+                    >
+                      <div
+                        className={`appointment-service-select ${
+                          serviceMenuOpen ? "is-open" : ""
+                        }`}
+                        ref={serviceSelectRef}
+                      >
+                        <button
+                          type="button"
+                          className="appointment-service-select-trigger"
+                          aria-haspopup="listbox"
+                          aria-expanded={serviceMenuOpen}
+                          onClick={() => setServiceMenuOpen((current) => !current)}
+                        >
+                          <div>
+                            <small>
+                              {selectedService
+                                ? "Selected vehicle service"
+                                : "Choose a vehicle service"}
+                            </small>
+                            <strong>
+                              {selectedService?.title || "Select a service"}
+                            </strong>
+                          </div>
+                          {selectedService && (
+                            <span className="appointment-service-trigger-price">
+                              {formatServicePrice(selectedService.price)}
+                            </span>
+                          )}
+                          <ChevronDown
+                            className="appointment-service-select-arrow"
+                            size={19}
+                          />
+                        </button>
+
+                        {serviceMenuOpen && (
+                          <div
+                            className="appointment-service-select-menu"
+                            role="listbox"
+                            aria-label="Vehicle services"
+                          >
+                            {bookingServices.map((service) => {
+                              const isSelected =
+                                String(service.id) === String(form.serviceId);
+
+                              return (
+                                <button
+                                  type="button"
+                                  role="option"
+                                  aria-selected={isSelected}
+                                  className={isSelected ? "is-selected" : ""}
+                                  key={service.id}
+                                  onClick={() => {
+                                    updateField("serviceId", String(service.id));
+                                    setServiceMenuOpen(false);
+                                  }}
+                                >
+                                  <div>
+                                    <strong>{service.title}</strong>
+                                    <small>
+                                      {service.description ||
+                                        "Professional vehicle service and maintenance."}
+                                    </small>
+                                  </div>
+                                  <span>{formatServicePrice(service.price)}</span>
+                                  {isSelected && <Check size={16} />}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    </AppointmentField>
+
+                    <AppointmentField label="Name" error={errors.name}>
+                      <div className="appointment-input-icon">
+                        <User size={17} />
+                        <input
+                          value={form.name}
+                          onChange={(event) =>
+                            updateField("name", event.target.value)
+                          }
+                          placeholder="Enter your name"
+                          autoComplete="name"
+                        />
+                      </div>
+                    </AppointmentField>
+
+                    <AppointmentField label="Email" error={errors.email}>
+                      <div className="appointment-input-icon">
+                        <Mail size={17} />
+                        <input
+                          type="email"
+                          value={form.email}
+                          onChange={(event) =>
+                            updateField("email", event.target.value)
+                          }
+                          placeholder="Enter your email"
+                          autoComplete="email"
+                        />
+                      </div>
+                    </AppointmentField>
+
+                    <AppointmentField
+                      label="Contact Number"
+                      error={errors.contactNumber}
+                    >
+                      <div className="appointment-input-icon">
+                        <Phone size={17} />
+                        <input
+                          value={form.contactNumber}
+                          onChange={(event) =>
+                            updateField("contactNumber", event.target.value)
+                          }
+                          placeholder="Enter your contact number"
+                          autoComplete="tel"
+                        />
+                      </div>
+                    </AppointmentField>
+
+                    <AppointmentField
+                      label="Address"
+                      error={errors.address}
+                      fullWidth
+                    >
+                      <div className="appointment-input-icon appointment-textarea-icon">
+                        <MapPin size={17} />
+                        <textarea
+                          value={form.address}
+                          onChange={(event) =>
+                            updateField("address", event.target.value)
+                          }
+                          placeholder="Enter your address"
+                          rows={3}
+                          autoComplete="street-address"
+                        />
+                      </div>
+                    </AppointmentField>
+                  </div>
+                </div>
+              )}
+
+              {step === 2 && (
+                <div className="appointment-schedule-layout">
+                  <div className="appointment-calendar-card">
+                    <div className="appointment-calendar-header">
+                      <button
+                        onClick={() =>
+                          canGoToPreviousMonth &&
+                          setCalendarMonth(
+                            new Date(
+                              calendarMonth.getFullYear(),
+                              calendarMonth.getMonth() - 1,
+                              1,
+                            ),
+                          )
+                        }
+                        disabled={!canGoToPreviousMonth}
+                        aria-label="Previous month"
+                      >
+                        <ChevronLeft size={18} />
+                      </button>
+                      <div>
+                        <strong>
+                          {new Intl.DateTimeFormat("en-US", {
+                            month: "long",
+                            year: "numeric",
+                          }).format(calendarMonth)}
+                        </strong>
+                        <span><span className="live-calendar-dot" /> Live availability</span>
+                      </div>
+                      <button
+                        onClick={() =>
+                          setCalendarMonth(
+                            new Date(
+                              calendarMonth.getFullYear(),
+                              calendarMonth.getMonth() + 1,
+                              1,
+                            ),
+                          )
+                        }
+                        aria-label="Next month"
+                      >
+                        <ChevronRight size={18} />
+                      </button>
+                    </div>
+
+                    <div className="appointment-calendar-weekdays">
+                      {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
+                        (day) => <span key={day}>{day}</span>,
+                      )}
+                    </div>
+
+                    <div className="appointment-calendar-grid">
+                      {calendarDays.map((date) => {
+                        const dateKey = toLocalDateKey(date);
+                        const isOutsideMonth =
+                          date.getMonth() !== calendarMonth.getMonth();
+                        const isDisabled = isDayUnavailable(dateKey);
+                        const isSelected = form.bookingDate === dateKey;
+                        const isToday = dateKey === todayKey;
+
+                        return (
+                          <button
+                            type="button"
+                            key={dateKey}
+                            className={`${isOutsideMonth ? "is-outside" : ""} ${
+                              isDisabled ? "is-disabled" : ""
+                            } ${isSelected ? "is-selected" : ""} ${
+                              isToday ? "is-today" : ""
+                            }`}
+                            onClick={() => selectDate(date)}
+                            disabled={isDisabled}
+                            aria-label={formatBookingDate(dateKey)}
+                          >
+                            <span>{date.getDate()}</span>
+                            {isToday && <small>Today</small>}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {errors.bookingDate && (
+                      <p className="appointment-field-error calendar-error">
+                        <AlertCircle size={14} /> {errors.bookingDate}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="appointment-time-card">
+                    <div className="appointment-step-heading compact">
+                      <span><Clock3 size={19} /></span>
+                      <div>
+                        <h3>Select a time slot</h3>
+                        <p>
+                          {form.bookingDate
+                            ? formatBookingDate(form.bookingDate)
+                            : "Choose a date from the calendar first."}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="appointment-time-grid">
+                      {BOOKING_TIME_SLOTS.map((slot) => {
+                        const slotState = getSlotState(
+                          form.bookingDate,
+                          slot.value,
+                        );
+                        const unavailable = slotState !== "available";
+                        const isSelected = form.timeSlot === slot.value;
+
+                        return (
+                          <button
+                            type="button"
+                            key={slot.value}
+                            disabled={unavailable}
+                            className={`${isSelected ? "is-selected" : ""} ${
+                              slotState === "booked" ? "is-booked" : ""
+                            } ${slotState === "waiting" ? "is-waiting" : ""}`}
+                            onClick={() => updateField("timeSlot", slot.value)}
+                          >
+                            <Clock3 size={15} />
+                            <span>{slot.label}</span>
+                            <small>
+                              {slotState === "waiting"
+                                ? "Select date"
+                                : slotState === "booked"
+                                  ? "Booked"
+                                  : "Available"}
+                            </small>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {errors.timeSlot && (
+                      <p className="appointment-field-error">
+                        <AlertCircle size={14} /> {errors.timeSlot}
+                      </p>
+                    )}
+
+                    <div className="appointment-live-note">
+                      <CalendarDays size={17} />
+                      Past dates and elapsed time slots are disabled automatically.
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {step === 3 && (
+                <div className="appointment-payment-layout">
+                  <div className="appointment-payment-panel">
+                    <div className="appointment-step-heading">
+                      <span><CreditCard size={19} /></span>
+                      <div>
+                        <h3>Choose your payment option</h3>
+                        <p>Payment information is required to submit the booking.</p>
+                      </div>
+                    </div>
+
+                    <div className="appointment-payment-amount">
+                      <div>
+                        <small>Amount to Pay</small>
+                        <strong>
+                          {selectedService
+                            ? formatServicePrice(selectedService.price)
+                            : "Rs. 0"}
+                        </strong>
+                      </div>
+                      <span>{selectedService?.title || "Vehicle Service"}</span>
+                    </div>
+
+                    <div className="appointment-payment-options">
+                      <button
+                        type="button"
+                        className={form.paymentMethod === "card" ? "is-selected" : ""}
+                        onClick={() => updateField("paymentMethod", "card")}
+                      >
+                        <span><CreditCard size={21} /></span>
+                        <div>
+                          <strong>Card Payment</strong>
+                          <small>Visa or Mastercard</small>
+                        </div>
+                        <i>{form.paymentMethod === "card" && <Check size={15} />}</i>
+                      </button>
+                      <button
+                        type="button"
+                        className={form.paymentMethod === "bank" ? "is-selected" : ""}
+                        onClick={() => updateField("paymentMethod", "bank")}
+                      >
+                        <span><Banknote size={21} /></span>
+                        <div>
+                          <strong>Bank Transfer</strong>
+                          <small>Upload your payment receipt</small>
+                        </div>
+                        <i>{form.paymentMethod === "bank" && <Check size={15} />}</i>
+                      </button>
+                    </div>
+                    {errors.paymentMethod && (
+                      <p className="appointment-field-error">
+                        <AlertCircle size={14} /> {errors.paymentMethod}
+                      </p>
+                    )}
+
+                    {form.paymentMethod === "card" && (
+                      <div className="appointment-card-form">
+                        <AppointmentField
+                          label="Cardholder Name"
+                          error={errors.cardholderName}
+                          fullWidth
+                        >
+                          <input
+                            value={form.cardholderName}
+                            onChange={(event) =>
+                              updateField("cardholderName", event.target.value)
+                            }
+                            placeholder="Name shown on the card"
+                            autoComplete="cc-name"
+                          />
+                        </AppointmentField>
+                        <AppointmentField
+                          label="Card Number"
+                          error={errors.cardNumber}
+                          fullWidth
+                        >
+                          <div className="appointment-input-icon">
+                            <CreditCard size={17} />
+                            <input
+                              value={form.cardNumber}
+                              onChange={(event) =>
+                                updateField(
+                                  "cardNumber",
+                                  formatCardNumber(event.target.value),
+                                )
+                              }
+                              placeholder="0000 0000 0000 0000"
+                              inputMode="numeric"
+                              autoComplete="cc-number"
+                            />
+                          </div>
+                        </AppointmentField>
+                        <AppointmentField label="Expiry" error={errors.expiry}>
+                          <input
+                            value={form.expiry}
+                            onChange={(event) =>
+                              updateField("expiry", formatExpiry(event.target.value))
+                            }
+                            placeholder="MM/YY"
+                            inputMode="numeric"
+                            autoComplete="cc-exp"
+                          />
+                        </AppointmentField>
+                        <AppointmentField label="CVV" error={errors.cvv}>
+                          <div className="appointment-input-icon">
+                            <LockKeyhole size={16} />
+                            <input
+                              type="password"
+                              value={form.cvv}
+                              onChange={(event) =>
+                                updateField(
+                                  "cvv",
+                                  event.target.value.replace(/\D/g, "").slice(0, 4),
+                                )
+                              }
+                              placeholder="CVV"
+                              inputMode="numeric"
+                              autoComplete="cc-csc"
+                            />
+                          </div>
+                        </AppointmentField>
+                        <p className="appointment-security-note">
+                          <ShieldCheck size={16} /> Connect this form to your secure
+                          payment gateway before accepting real card payments.
+                        </p>
+                      </div>
+                    )}
+
+                    {form.paymentMethod === "bank" && (
+                      <div className="appointment-bank-panel">
+                        <div className="appointment-bank-instruction">
+                          <Banknote size={21} />
+                          <div>
+                            <strong>Bank transfer receipt</strong>
+                            <p>
+                              Complete the transfer using the official bank details
+                              provided by Asian Auto Clean Park, then upload the receipt.
+                            </p>
+                          </div>
+                        </div>
+
+                        <label className={`appointment-upload-box ${form.bankSlip ? "has-file" : ""}`}>
+                          <input
+                            type="file"
+                            accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg"
+                            onChange={(event) =>
+                              handleBankSlip(event.target.files?.[0])
+                            }
+                          />
+                          {form.bankSlip ? (
+                            <>
+                              <FileText size={28} />
+                              <strong>{form.bankSlip.name}</strong>
+                              <small>
+                                {(form.bankSlip.size / 1024 / 1024).toFixed(2)} MB · Click to replace
+                              </small>
+                            </>
+                          ) : (
+                            <>
+                              <UploadCloud size={30} />
+                              <strong>Upload bank transfer receipt</strong>
+                              <small>PDF, PNG, JPG or JPEG · Maximum 5 MB</small>
+                            </>
+                          )}
+                        </label>
+                        {errors.bankSlip && (
+                          <p className="appointment-field-error">
+                            <AlertCircle size={14} /> {errors.bankSlip}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  <aside className="appointment-booking-summary">
+                    <span className="appointment-summary-label">Booking Summary</span>
+                    <h3>Review your appointment</h3>
+                    <div className="appointment-summary-service">
+                      <span><Wrench size={19} /></span>
+                      <div>
+                        <small>Selected Service</small>
+                        <strong>{selectedService?.title || "Not selected"}</strong>
+                        <b>
+                          {selectedService
+                            ? formatServicePrice(selectedService.price)
+                            : "Rs. 0"}
+                        </b>
+                      </div>
+                    </div>
+                    <dl>
+                      <div>
+                        <dt><User size={15} /> Customer</dt>
+                        <dd>{form.name || "Not provided"}</dd>
+                      </div>
+                      <div>
+                        <dt><CalendarDays size={15} /> Date</dt>
+                        <dd>{formatBookingDate(form.bookingDate)}</dd>
+                      </div>
+                      <div>
+                        <dt><Clock3 size={15} /> Time</dt>
+                        <dd>{formatTimeSlot(form.timeSlot) || "Not selected"}</dd>
+                      </div>
+                      <div>
+                        <dt><Mail size={15} /> Email</dt>
+                        <dd>{form.email || "Not provided"}</dd>
+                      </div>
+                      <div className="appointment-summary-total-row">
+                        <dt><Banknote size={15} /> Total Payment</dt>
+                        <dd>
+                          {selectedService
+                            ? formatServicePrice(selectedService.price)
+                            : "Rs. 0"}
+                        </dd>
+                      </div>
+                    </dl>
+                    <div className="appointment-pending-note">
+                      <ShieldCheck size={18} />
+                      <p>
+                        Your service status will remain <strong>Pending</strong> until
+                        the administrator checks the payment and approves the booking.
+                      </p>
+                    </div>
+                  </aside>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {!success && (
+          <footer className="appointment-modal-footer">
+            <div className="appointment-footer-note">
+              {selectedService && (
+                <div className="appointment-footer-service">
+                  <span className="appointment-footer-service-icon">
+                    <Wrench size={16} />
+                  </span>
+                  <span className="appointment-footer-service-copy">
+                    <small>Selected service</small>
+                    <strong>{selectedService.title}</strong>
+                  </span>
+                  <span className="appointment-footer-service-price">
+                    <small>Service Price</small>
+                    <strong>{formatServicePrice(selectedService.price)}</strong>
+                  </span>
+                </div>
+              )}
+            </div>
+            <div className="appointment-footer-actions">
+              {step > 1 && (
+                <button
+                  className="button appointment-back-button"
+                  onClick={() => {
+                    setErrors({});
+                    setStep((current) => current - 1);
+                  }}
+                  disabled={submitting}
+                >
+                  <ChevronLeft size={17} /> Back
+                </button>
+              )}
+              {step < 3 ? (
+                <button className="button button-primary" onClick={goNext}>
+                  Next Step <ChevronRight size={17} />
+                </button>
+              ) : (
+                <button
+                  className="button button-primary appointment-submit-button"
+                  onClick={submitBooking}
+                  disabled={submitting}
+                >
+                  {submitting ? (
+                    <><span className="appointment-spinner" /> Submitting...</>
+                  ) : (
+                    <><CheckCircle2 size={18} /> Submit Booking</>
+                  )}
+                </button>
+              )}
+            </div>
+          </footer>
+        )}
+      </section>
+    </div>
+  );
+}
+
+function AppointmentField({
+  label,
+  error,
+  fullWidth = false,
+  asDiv = false,
+  children,
+}) {
+  const FieldTag = asDiv ? "div" : "label";
+
+  return (
+    <FieldTag className={`appointment-field ${fullWidth ? "is-full" : ""}`}>
+      <span>{label} <b>*</b></span>
+      {children}
+      {error && (
+        <small className="appointment-field-error">
+          <AlertCircle size={13} /> {error}
+        </small>
+      )}
+    </FieldTag>
+  );
+}
+

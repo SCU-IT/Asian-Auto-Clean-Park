@@ -1,0 +1,2339 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap");
+
+:root {
+  --aacp-admin-sidebar: #111a2b;
+  --aacp-admin-sidebar-soft: #1b263b;
+  --aacp-admin-orange: #6baeff;
+  --aacp-admin-blue: #0d67d8;
+  --aacp-admin-text: #172238;
+  --aacp-admin-muted: #718097;
+  --aacp-admin-line: #e2e8f1;
+  --aacp-admin-surface: #ffffff;
+  --aacp-admin-background: #f4f6fb;
+  --aacp-admin-shadow: 0 18px 45px rgba(22, 34, 57, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.aacp-admin-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  color: var(--aacp-admin-text);
+  background: var(--aacp-admin-background);
+  font-family: Inter, Arial, sans-serif;
+}
+
+.aacp-admin-sidebar {
+  width: 250px;
+  height: 100vh;
+  padding: 28px 21px 25px;
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 0 0, rgba(25, 102, 218, 0.14), transparent 30%),
+    var(--aacp-admin-sidebar);
+}
+
+.aacp-admin-brand {
+  min-height: 160px;
+  display: grid;
+  align-content: start;
+}
+
+.aacp-admin-brand img {
+  width: 92px;
+  height: 68px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.aacp-admin-brand h2 {
+  margin: 20px 0 8px;
+  font-family: Manrope, Inter, sans-serif;
+  font-size: 25px;
+  letter-spacing: -0.03em;
+}
+
+.aacp-admin-brand p {
+  margin: 0;
+  color: #c6d0e2;
+  font-size: 13px;
+}
+
+.aacp-admin-navigation {
+  display: grid;
+  gap: 8px;
+}
+
+.aacp-admin-navigation button {
+  min-height: 47px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #eef3fc;
+  border: 0;
+  border-left: 4px solid transparent;
+  border-radius: 13px;
+  background: transparent;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+  transition: 0.24s ease;
+}
+
+.aacp-admin-navigation button:hover {
+  background: #6baeff48;
+}
+
+.aacp-admin-navigation button.is-active {
+  color: #ffffff;
+  border-left-color: var(--aacp-admin-orange);
+  background: rgba(0, 60, 73, 0.751);
+  box-shadow: inset 0 0 0 1px rgba(255, 122, 20, 0.08);
+}
+
+.aacp-admin-navigation button.is-active svg {
+  color: rgb(140, 138, 138);
+}
+
+.aacp-admin-logout {
+  min-height: 55px;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.07);
+  font-size: 14px;
+  font-weight: 800;
+  transition: 0.22s ease;
+}
+
+.aacp-admin-logout:hover {
+  border-color: #6baeff48;
+  background: rgba(0, 60, 73, 0.751);
+}
+
+.aacp-admin-main {
+  min-width: 0;
+  grid-column: 2;
+  padding: 31px 33px 45px;
+}
+
+.aacp-admin-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.aacp-admin-header-copy {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+}
+
+.aacp-admin-header-copy > div > span {
+  color: var(--aacp-admin-orange);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.09em;
+}
+
+.aacp-admin-page-header h1 {
+  margin: 11px 0 9px;
+  color: #182238;
+  font-family: Manrope, Inter, sans-serif;
+  font-size: clamp(31px, 4vw, 46px);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.aacp-admin-page-header p {
+  margin: 0;
+  color: #68768d;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.aacp-admin-mobile-menu {
+  width: 42px;
+  height: 42px;
+  display: none;
+  place-items: center;
+  color: #22334d;
+  border: 1px solid #dbe3ee;
+  border-radius: 11px;
+  background: #ffffff;
+}
+
+.aacp-admin-refresh {
+  min-height: 48px;
+  padding: 0 19px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: #ffffff;
+  border: 0;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ff861f, #ff6d08);
+  box-shadow: 0 12px 25px rgba(255, 109, 8, 0.22);
+  font-size: 12px;
+  font-weight: 800;
+  transition: 0.22s ease;
+}
+
+.aacp-admin-refresh:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(255, 109, 8, 0.29);
+}
+
+.aacp-admin-update-row {
+  min-height: 44px;
+  margin: 24px 0 22px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #55708d;
+  border: 1px solid #dce8f5;
+  border-radius: 12px;
+  background: #f7fbff;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.aacp-admin-update-row small {
+  margin-left: auto;
+  color: #8995a6;
+  font-size: 9px;
+}
+
+.aacp-admin-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #20b56a;
+  box-shadow: 0 0 0 5px rgba(32, 181, 106, 0.1);
+}
+
+.aacp-admin-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 17px;
+}
+
+.aacp-admin-stat-card {
+  min-height: 158px;
+  padding: 23px 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  border: 1px solid #e4e8ef;
+  border-radius: 19px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(24, 34, 56, 0.055);
+}
+
+.aacp-admin-stat-card::after {
+  content: "";
+  width: 76px;
+  height: 76px;
+  position: absolute;
+  top: -25px;
+  right: -20px;
+  border-radius: 50%;
+  background: var(--stat-soft);
+}
+
+.aacp-admin-stat-card p {
+  margin: 0;
+  color: #5e6d84;
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.aacp-admin-stat-card strong {
+  margin: 18px 0 15px;
+  display: block;
+  color: #1a263c;
+  font-family: Manrope, Inter, sans-serif;
+  font-size: 36px;
+  line-height: 1;
+}
+
+.aacp-admin-stat-card strong.is-money {
+  font-size: clamp(21px, 2.25vw, 30px);
+}
+
+.aacp-admin-stat-card > div > span {
+  color: #8491a4;
+  font-size: 10px;
+}
+
+.aacp-admin-stat-icon {
+  width: 45px;
+  height: 45px;
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  color: var(--stat-color);
+  border-radius: 14px;
+  background: var(--stat-soft);
+}
+
+.aacp-admin-stat-card.tone-orange {
+  --stat-color: #ee7c20;
+  --stat-soft: #fff0df;
+}
+
+.aacp-admin-stat-card.tone-green {
+  --stat-color: #1da768;
+  --stat-soft: #e2f7ec;
+}
+
+.aacp-admin-stat-card.tone-red {
+  --stat-color: #df5260;
+  --stat-soft: #ffe6e8;
+}
+
+.aacp-admin-stat-card.tone-blue {
+  --stat-color: #4980bd;
+  --stat-soft: #eaf0f7;
+}
+
+.aacp-admin-overview-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+  gap: 20px;
+}
+
+.aacp-admin-panel {
+  min-width: 0;
+  border: 1px solid #e3e8f0;
+  border-radius: 21px;
+  background: var(--aacp-admin-surface);
+  box-shadow: var(--aacp-admin-shadow);
+}
+
+.aacp-admin-today-panel,
+.aacp-admin-activity-panel {
+  padding: 23px;
+}
+
+.aacp-admin-panel-heading {
+  margin-bottom: 18px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.aacp-admin-panel-heading h2 {
+  margin: 0 0 7px;
+  color: #1a263a;
+  font-family: Manrope, Inter, sans-serif;
+  font-size: 21px;
+  letter-spacing: -0.025em;
+}
+
+.aacp-admin-panel-heading p {
+  margin: 0;
+  color: #748198;
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.aacp-admin-panel-heading > span {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 11px;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  border-radius: 12px;
+  background: #ff7a14;
+  font-weight: 800;
+}
+
+.aacp-admin-section-kicker {
+  margin-bottom: 7px;
+  display: block;
+  color: #ff7a14;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.aacp-admin-today-list {
+  display: grid;
+  gap: 9px;
+}
+
+.aacp-admin-today-list > button {
+  min-height: 68px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  color: #26374f;
+  border: 1px solid #e5eaf1;
+  border-radius: 13px;
+  background: #fbfcfe;
+  transition: 0.2s ease;
+}
+
+.aacp-admin-today-list > button:hover {
+  border-color: #cbdcf0;
+  background: #f4f9ff;
+  transform: translateX(3px);
+}
+
+.aacp-admin-time-box {
+  height: 42px;
+  display: grid;
+  place-items: center;
+  color: #0e5fc8;
+  border-radius: 10px;
+  background: #eaf4ff;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.aacp-admin-today-list strong,
+.aacp-admin-day-list strong {
+  display: block;
+  font-size: 11px;
+}
+
+.aacp-admin-today-list small,
+.aacp-admin-day-list small {
+  margin-top: 5px;
+  display: block;
+  color: #7c899b;
+  font-size: 9px;
+}
+
+.aacp-admin-progress-item {
+  margin-top: 20px;
+}
+
+.aacp-admin-progress-item > div {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #5a6d84;
+  font-size: 10px;
+}
+
+.aacp-admin-progress-item > div strong {
+  color: #1e2d43;
+  font-size: 11px;
+}
+
+.aacp-admin-progress-item > div small {
+  color: #8793a4;
+  font-size: 8px;
+}
+
+.aacp-admin-progress-track {
+  height: 8px;
+  display: block;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #edf1f6;
+}
+
+.aacp-admin-progress-track i {
+  height: 100%;
+  display: block;
+  border-radius: inherit;
+  transition: width 0.35s ease;
+}
+
+.aacp-admin-progress-track i.tone-pending {
+  background: #f6a24a;
+}
+
+.aacp-admin-progress-track i.tone-approved {
+  background: #28b472;
+}
+
+.aacp-admin-progress-track i.tone-rejected {
+  background: #df5966;
+}
+
+.aacp-admin-progress-track i.tone-completed {
+  background: #3478c8;
+}
+
+.aacp-admin-table-panel {
+  margin-top: 20px;
+  padding: 23px;
+}
+
+.aacp-admin-text-button {
+  min-height: 38px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #0c63d2;
+  border: 1px solid #cfe0f5;
+  border-radius: 10px;
+  background: #f4f9ff;
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.aacp-admin-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.aacp-admin-request-table,
+.aacp-admin-report-table {
+  width: 100%;
+  min-width: 890px;
+  border-collapse: collapse;
+}
+
+.aacp-admin-request-table th,
+.aacp-admin-report-table th {
+  padding: 13px 12px;
+  color: #65738a;
+  border-bottom: 1px solid #e4e9f0;
+  text-align: left;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.aacp-admin-request-table td,
+.aacp-admin-report-table td {
+  padding: 15px 12px;
+  color: #314158;
+  border-bottom: 1px solid #edf0f4;
+  font-size: 10px;
+  vertical-align: middle;
+}
+
+.aacp-admin-request-table tbody tr:hover,
+.aacp-admin-report-table tbody tr:hover {
+  background: #fbfcfe;
+}
+
+.aacp-admin-request-table td > strong {
+  display: block;
+  color: #1f2f46;
+  font-size: 10px;
+}
+
+.aacp-admin-request-table td > small {
+  margin-top: 5px;
+  display: block;
+  color: #8490a2;
+  font-size: 8px;
+}
+
+.aacp-admin-status {
+  width: max-content;
+  min-width: 72px;
+  min-height: 26px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--status-border);
+  border-radius: 999px;
+  color: var(--status-color);
+  background: var(--status-background);
+  font-size: 8px;
+  font-weight: 850;
+  text-transform: capitalize;
+}
+
+.aacp-admin-status.status-pending {
+  --status-color: #a76b0e;
+  --status-border: #f1d293;
+  --status-background: #fff8e6;
+}
+
+.aacp-admin-status.status-approved {
+  --status-color: #148653;
+  --status-border: #addfc8;
+  --status-background: #eaf8f1;
+}
+
+.aacp-admin-status.status-rejected,
+.aacp-admin-status.status-cancelled {
+  --status-color: #bd3342;
+  --status-border: #f2b4bc;
+  --status-background: #fff0f2;
+}
+
+.aacp-admin-status.status-completed {
+  --status-color: #2368b6;
+  --status-border: #bad5f4;
+  --status-background: #edf6ff;
+}
+
+.aacp-admin-table-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.aacp-admin-table-actions button {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--action-border);
+  border-radius: 9px;
+  color: var(--action-color);
+  background: var(--action-background);
+  transition: 0.18s ease;
+}
+
+.aacp-admin-table-actions button:hover {
+  transform: translateY(-2px);
+}
+
+.aacp-admin-table-actions .view {
+  --action-color: #2668b6;
+  --action-border: #cbdff5;
+  --action-background: #f0f7ff;
+}
+
+.aacp-admin-table-actions .approve,
+.aacp-admin-table-actions .complete {
+  --action-color: #168958;
+  --action-border: #b7e0cc;
+  --action-background: #ecf9f3;
+}
+
+.aacp-admin-table-actions .reject {
+  --action-color: #c43a4a;
+  --action-border: #f0bdc3;
+  --action-background: #fff1f3;
+}
+
+.aacp-admin-table-note {
+  padding: 13px 12px 0;
+  color: #8792a4;
+  font-size: 9px;
+  text-align: right;
+}
+
+.aacp-admin-empty-state {
+  min-height: 205px;
+  padding: 25px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  text-align: center;
+}
+
+.aacp-admin-empty-state > span {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  color: #7c9bc0;
+  border-radius: 18px;
+  background: #eef4fb;
+}
+
+.aacp-admin-empty-state h3 {
+  margin: 14px 0 7px;
+  color: #27374f;
+  font-size: 14px;
+}
+
+.aacp-admin-empty-state p {
+  max-width: 350px;
+  margin: 0;
+  color: #7f8b9d;
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.aacp-admin-calendar-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(310px, 0.5fr);
+  gap: 20px;
+}
+
+.aacp-admin-calendar-panel {
+  padding: 23px;
+}
+
+.aacp-admin-calendar-header {
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: 42px 1fr 42px;
+  align-items: center;
+  gap: 15px;
+}
+
+.aacp-admin-calendar-header > button {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  color: #274968;
+  border: 1px solid #dbe4ee;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.aacp-admin-calendar-header > button:hover {
+  color: #ffffff;
+  border-color: #0d67d8;
+  background: #0d67d8;
+}
+
+.aacp-admin-calendar-header > div {
+  text-align: center;
+}
+
+.aacp-admin-calendar-header h2 {
+  margin: 0 0 4px;
+  font-family: Manrope, Inter, sans-serif;
+  font-size: 22px;
+}
+
+.aacp-admin-calendar-header p {
+  margin: 0;
+  color: #7c899b;
+  font-size: 9px;
+}
+
+.aacp-admin-calendar-weekdays,
+.aacp-admin-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.aacp-admin-calendar-weekdays {
+  border: 1px solid #e6eaf0;
+  border-bottom: 0;
+  border-radius: 13px 13px 0 0;
+  overflow: hidden;
+}
+
+.aacp-admin-calendar-weekdays span {
+  padding: 12px 5px;
+  color: #7b8799;
+  background: #f8fafc;
+  text-align: center;
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.aacp-admin-calendar-grid {
+  border-top: 1px solid #e6eaf0;
+  border-left: 1px solid #e6eaf0;
+}
+
+.aacp-admin-calendar-grid > button {
+  min-width: 0;
+  min-height: 104px;
+  padding: 8px;
+  position: relative;
+  color: #27374d;
+  border: 0;
+  border-right: 1px solid #e6eaf0;
+  border-bottom: 1px solid #e6eaf0;
+  background: #ffffff;
+  text-align: left;
+  transition: 0.18s ease;
+}
+
+.aacp-admin-calendar-grid > button:hover {
+  background: #f5f9ff;
+}
+
+.aacp-admin-calendar-grid > button.is-outside {
+  color: #b6c0ce;
+  background: #fbfcfd;
+}
+
+.aacp-admin-calendar-grid > button.is-selected {
+  box-shadow: inset 0 0 0 2px #ff7a14;
+  background: #fffaf6;
+}
+
+.aacp-admin-calendar-grid > button.is-today > span {
+  color: #ffffff;
+  background: #0d67d8;
+}
+
+.aacp-admin-calendar-grid > button > span {
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.aacp-admin-calendar-bookings {
+  margin-top: 5px;
+  display: grid;
+  gap: 3px;
+}
+
+.aacp-admin-calendar-bookings small {
+  padding: 4px 5px;
+  overflow: hidden;
+  border-radius: 6px;
+  font-size: 7px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.aacp-admin-calendar-bookings .status-pending {
+  color: #97600f;
+  background: #fff2d8;
+}
+
+.aacp-admin-calendar-bookings .status-approved {
+  color: #167a50;
+  background: #def5e9;
+}
+
+.aacp-admin-calendar-bookings .status-rejected,
+.aacp-admin-calendar-bookings .status-cancelled {
+  color: #b53d49;
+  background: #ffe5e8;
+}
+
+.aacp-admin-calendar-bookings .status-completed {
+  color: #2468b3;
+  background: #e5f1ff;
+}
+
+.aacp-admin-calendar-bookings .is-more {
+  color: #68788e;
+  background: #eff2f6;
+}
+
+.aacp-admin-day-panel {
+  padding: 23px;
+  align-self: start;
+}
+
+.aacp-admin-day-list {
+  display: grid;
+  gap: 9px;
+}
+
+.aacp-admin-day-list > button {
+  min-height: 77px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 11px;
+  color: #26384f;
+  border: 1px solid #e3e8ef;
+  border-radius: 13px;
+  background: #fbfcfe;
+  text-align: left;
+}
+
+.aacp-admin-day-list > button > span {
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: #0e61ca;
+  border-radius: 10px;
+  background: #eaf4ff;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.aacp-admin-day-list .aacp-admin-status {
+  margin-top: 7px;
+}
+
+.aacp-admin-day-list > button > svg {
+  color: #7a8da4;
+}
+
+.aacp-admin-request-heading {
+  align-items: center;
+}
+
+.aacp-admin-request-filters {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 9px;
+}
+
+.aacp-admin-search-box {
+  width: min(350px, 33vw);
+  min-height: 43px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #7c8b9f;
+  border: 1px solid #dce4ef;
+  border-radius: 11px;
+  background: #ffffff;
+}
+
+.aacp-admin-search-box input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  color: #24354d;
+  background: transparent;
+  font-size: 10px;
+}
+
+.aacp-admin-request-filters select,
+.aacp-admin-request-filters > input,
+.aacp-admin-report-filters input,
+.aacp-admin-report-filters select {
+  min-height: 43px;
+  padding: 0 11px;
+  color: #26374e;
+  border: 1px solid #dce4ef;
+  border-radius: 11px;
+  outline: 0;
+  background: #ffffff;
+  font-size: 10px;
+}
+
+.aacp-admin-report-filters {
+  margin-bottom: 20px;
+  padding: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(160px, 1fr)) auto;
+  align-items: end;
+  gap: 12px;
+  border: 1px solid #e1e7ef;
+  border-radius: 17px;
+  background: #ffffff;
+  box-shadow: 0 9px 26px rgba(23, 36, 61, 0.055);
+}
+
+.aacp-admin-report-filters label {
+  display: grid;
+  gap: 7px;
+}
+
+.aacp-admin-report-filters label > span {
+  color: #5f6e83;
+  font-size: 9px;
+  font-weight: 750;
+}
+
+.aacp-admin-report-filters button {
+  min-height: 43px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #ffffff;
+  border: 0;
+  border-radius: 11px;
+  background: #0d67d8;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.aacp-admin-report-filters button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.aacp-admin-report-stat-grid {
+  margin-bottom: 20px;
+}
+
+.aacp-admin-report-panel {
+  padding: 23px;
+}
+
+.aacp-admin-service-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #20344e;
+}
+
+.aacp-admin-service-cell svg {
+  color: #0d67d8;
+}
+
+.aacp-admin-demand-track {
+  width: 130px;
+  height: 8px;
+  display: block;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #edf1f6;
+}
+
+.aacp-admin-demand-track i {
+  height: 100%;
+  display: block;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ff7a14, #ffac62);
+}
+
+.aacp-admin-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  padding: 24px;
+  display: grid;
+  place-items: center;
+  background: rgba(9, 17, 31, 0.67);
+  backdrop-filter: blur(8px);
+}
+
+.aacp-admin-modal {
+  width: min(760px, 100%);
+  max-height: calc(100vh - 48px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 23px;
+  background: #ffffff;
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.34);
+  animation: aacpAdminModalIn 0.3s ease both;
+}
+
+.aacp-admin-modal > header {
+  padding: 22px 24px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid #e5eaf1;
+  background:
+    radial-gradient(circle at 90% 0, rgba(255, 122, 20, 0.13), transparent 30%),
+    linear-gradient(135deg, #ffffff, #f8fafc);
+}
+
+.aacp-admin-modal > header > div > span {
+  color: #ff7a14;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.09em;
+}
+
+.aacp-admin-modal > header h2 {
+  margin: 7px 0 10px;
+  font-family: Manrope, Inter, sans-serif;
+  font-size: 27px;
+}
+
+.aacp-admin-modal > header > button {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  color: #4c6079;
+  border: 1px solid #dce4ed;
+  border-radius: 11px;
+  background: #ffffff;
+}
+
+.aacp-admin-modal-content {
+  min-height: 0;
+  padding: 23px 24px;
+  overflow-y: auto;
+}
+
+.aacp-admin-modal-summary {
+  padding: 17px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  color: #ffffff;
+  border-radius: 15px;
+  background:
+    radial-gradient(circle at 90% 0, rgba(255, 161, 87, 0.26), transparent 32%),
+    linear-gradient(135deg, #143054, #0f2340);
+}
+
+.aacp-admin-modal-summary > span {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  color: #ff9c52;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.aacp-admin-modal-summary small {
+  color: #bdcbe0;
+  font-size: 8px;
+}
+
+.aacp-admin-modal-summary h3 {
+  margin: 5px 0;
+  font-size: 15px;
+}
+
+.aacp-admin-modal-summary strong {
+  color: #ffad6d;
+  font-size: 13px;
+}
+
+.aacp-admin-detail-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 11px;
+}
+
+.aacp-admin-detail-item {
+  min-height: 74px;
+  padding: 13px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border: 1px solid #e3e8ef;
+  border-radius: 13px;
+  background: #fbfcfe;
+}
+
+.aacp-admin-detail-item.is-full {
+  grid-column: 1 / -1;
+}
+
+.aacp-admin-detail-item > span {
+  width: 35px;
+  height: 35px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  color: #0d67d8;
+  border-radius: 10px;
+  background: #eaf4ff;
+}
+
+.aacp-admin-detail-item div {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.aacp-admin-detail-item small {
+  color: #8793a4;
+  font-size: 8px;
+}
+
+.aacp-admin-detail-item strong {
+  color: #27374e;
+  font-size: 10px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.aacp-admin-payment-proof {
+  margin-top: 14px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border: 1px solid #f0d4b5;
+  border-radius: 13px;
+  background: #fff9f3;
+}
+
+.aacp-admin-payment-proof > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: #e7771f;
+}
+
+.aacp-admin-payment-proof span {
+  display: grid;
+  gap: 5px;
+}
+
+.aacp-admin-payment-proof strong {
+  color: #3a4658;
+  font-size: 10px;
+}
+
+.aacp-admin-payment-proof small {
+  color: #7d899a;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.aacp-admin-payment-proof a {
+  min-height: 36px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  color: #ffffff;
+  border-radius: 9px;
+  background: #0d67d8;
+  font-size: 9px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.aacp-admin-modal > footer {
+  min-height: 76px;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid #e5eaf1;
+  background: #fbfcfe;
+}
+
+.aacp-admin-modal > footer button {
+  min-height: 43px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.aacp-admin-modal-reject {
+  color: #bd3443;
+  border: 1px solid #efbec4;
+  background: #fff1f3;
+}
+
+.aacp-admin-modal-approve,
+.aacp-admin-modal-complete {
+  color: #ffffff;
+  border: 1px solid #158557;
+  background: #1aa467;
+}
+
+.aacp-admin-modal-close-button {
+  color: #31445c;
+  border: 1px solid #d7e0ea;
+  background: #ffffff;
+}
+
+.aacp-admin-sidebar-overlay {
+  display: none;
+}
+
+@keyframes aacpAdminModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 1180px) {
+  .aacp-admin-stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .aacp-admin-overview-grid,
+  .aacp-admin-calendar-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .aacp-admin-day-panel {
+    width: 100%;
+  }
+
+  .aacp-admin-request-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .aacp-admin-request-filters {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .aacp-admin-search-box {
+    width: min(100%, 430px);
+  }
+}
+
+@media (max-width: 900px) {
+  .aacp-admin-shell {
+    display: block;
+  }
+
+  .aacp-admin-sidebar {
+    width: 250px;
+    transform: translateX(-105%);
+    transition: transform 0.28s ease;
+  }
+
+  .aacp-admin-sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .aacp-admin-main {
+    padding: 24px 20px 38px;
+  }
+
+  .aacp-admin-mobile-menu {
+    display: grid;
+  }
+
+  .aacp-admin-sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 35;
+    display: block;
+    border: 0;
+    background: rgba(8, 15, 28, 0.5);
+  }
+
+  .aacp-admin-report-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .aacp-admin-report-filters button {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 680px) {
+  .aacp-admin-main {
+    padding: 20px 13px 30px;
+  }
+
+  .aacp-admin-page-header {
+    display: grid;
+  }
+
+  .aacp-admin-refresh {
+    width: 100%;
+  }
+
+  .aacp-admin-page-header h1 {
+    font-size: 31px;
+  }
+
+  .aacp-admin-update-row {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 12px;
+  }
+
+  .aacp-admin-update-row small {
+    width: 100%;
+    margin-left: 17px;
+  }
+
+  .aacp-admin-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .aacp-admin-stat-card {
+    min-height: 135px;
+  }
+
+  .aacp-admin-today-panel,
+  .aacp-admin-activity-panel,
+  .aacp-admin-table-panel,
+  .aacp-admin-calendar-panel,
+  .aacp-admin-day-panel,
+  .aacp-admin-report-panel {
+    padding: 17px;
+  }
+
+  .aacp-admin-today-list > button {
+    grid-template-columns: 78px minmax(0, 1fr);
+  }
+
+  .aacp-admin-today-list .aacp-admin-status {
+    grid-column: 2;
+  }
+
+  .aacp-admin-calendar-panel {
+    overflow-x: auto;
+  }
+
+  .aacp-admin-calendar-weekdays,
+  .aacp-admin-calendar-grid {
+    min-width: 690px;
+  }
+
+  .aacp-admin-request-filters {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .aacp-admin-search-box {
+    width: 100%;
+  }
+
+  .aacp-admin-request-filters select,
+  .aacp-admin-request-filters > input {
+    width: 100%;
+  }
+
+  .aacp-admin-report-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .aacp-admin-report-filters button {
+    grid-column: auto;
+  }
+
+  .aacp-admin-modal-backdrop {
+    padding: 0;
+    align-items: end;
+  }
+
+  .aacp-admin-modal {
+    max-height: 94vh;
+    border-radius: 22px 22px 0 0;
+  }
+
+  .aacp-admin-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .aacp-admin-detail-item.is-full {
+    grid-column: auto;
+  }
+
+  .aacp-admin-payment-proof {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .aacp-admin-modal > footer {
+    flex-wrap: wrap;
+  }
+
+  .aacp-admin-modal > footer button {
+    flex: 1;
+  }
+}
+
+/* =========================================================
+   PROJECT-COLOUR LOGIN, DASHBOARD CARDS AND RESPONSIVE UPDATE
+   The existing sidebar/navigation design is intentionally unchanged.
+   ========================================================= */
+
+:root {
+  --aacp-project-blue: #075ee6;
+  --aacp-project-blue-dark: #0b4fc8;
+  --aacp-project-blue-light: #56b9ff;
+  --aacp-project-navy: #031a38;
+  --aacp-project-navy-soft: #0a2b56;
+  --aacp-project-sky: #eaf5ff;
+}
+
+/* Login */
+.aacp-admin-login-page {
+  min-height: 100svh;
+  padding: 28px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  color: #172238;
+  background:
+    radial-gradient(circle at 12% 14%, rgba(86, 185, 255, 0.2), transparent 27%),
+    radial-gradient(circle at 88% 84%, rgba(7, 94, 230, 0.14), transparent 29%),
+    linear-gradient(135deg, #f5f9ff 0%, #ffffff 48%, #edf6ff 100%);
+  font-family: Inter, Arial, sans-serif;
+}
+
+.aacp-admin-login-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(7, 94, 230, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(7, 94, 230, 0.07) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: linear-gradient(135deg, #000, transparent 82%);
+}
+
+.aacp-admin-login-background-shape {
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.aacp-admin-login-background-shape.shape-one {
+  width: 340px;
+  height: 340px;
+  top: -170px;
+  right: -105px;
+  border: 52px solid rgba(7, 94, 230, 0.08);
+}
+
+.aacp-admin-login-background-shape.shape-two {
+  width: 260px;
+  height: 260px;
+  left: -105px;
+  bottom: -120px;
+  border: 40px solid rgba(86, 185, 255, 0.11);
+}
+
+.aacp-admin-login-shell {
+  width: min(1040px, 100%);
+  min-height: 620px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 0.96fr) minmax(420px, 1.04fr);
+  border: 1px solid rgba(132, 178, 232, 0.34);
+  border-radius: 30px;
+  background: #ffffff;
+  box-shadow:
+    0 34px 90px rgba(3, 26, 56, 0.2),
+    0 8px 30px rgba(7, 94, 230, 0.08);
+  animation: aacpAdminLoginIn 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.aacp-admin-login-visual {
+  padding: 47px 44px;
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(86, 185, 255, 0.34), transparent 27%),
+    radial-gradient(circle at 8% 94%, rgba(7, 94, 230, 0.36), transparent 34%),
+    linear-gradient(145deg, #062650 0%, #031a38 64%, #021329 100%);
+}
+
+.aacp-admin-login-visual::before,
+.aacp-admin-login-visual::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.aacp-admin-login-visual::before {
+  width: 240px;
+  height: 240px;
+  top: -95px;
+  right: -95px;
+  border: 38px solid rgba(255, 255, 255, 0.045);
+}
+
+.aacp-admin-login-visual::after {
+  width: 190px;
+  height: 190px;
+  left: -90px;
+  bottom: -90px;
+  border: 30px solid rgba(86, 185, 255, 0.07);
+}
+
+.aacp-admin-login-visual > img {
+  width: 132px;
+  height: 86px;
+  position: relative;
+  z-index: 1;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.aacp-admin-login-kicker {
+  width: max-content;
+  max-width: 100%;
+  min-height: 34px;
+  margin-top: 36px;
+  padding: 0 13px;
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #d8edff;
+  border: 1px solid rgba(110, 190, 255, 0.34);
+  border-radius: 999px;
+  background: rgba(19, 107, 216, 0.17);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.aacp-admin-login-kicker svg {
+  color: #67baff;
+}
+
+.aacp-admin-login-visual h1 {
+  max-width: 470px;
+  margin: 22px 0 17px;
+  position: relative;
+  z-index: 1;
+  font-family: Manrope, Inter, sans-serif;
+  font-size: clamp(34px, 4.2vw, 50px);
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.aacp-admin-login-visual > p {
+  max-width: 465px;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  color: #c4d8ee;
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+.aacp-admin-login-features {
+  margin-top: 33px;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 11px;
+}
+
+.aacp-admin-login-features > div {
+  min-height: 65px;
+  padding: 11px 12px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.055);
+  backdrop-filter: blur(8px);
+}
+
+.aacp-admin-login-features > div > span {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  color: #76c1ff;
+  border-radius: 11px;
+  background: rgba(31, 126, 238, 0.18);
+}
+
+.aacp-admin-login-features > div > div {
+  display: grid;
+  gap: 4px;
+}
+
+.aacp-admin-login-features strong {
+  font-size: 10px;
+}
+
+.aacp-admin-login-features small {
+  color: #b7cbe2;
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.aacp-admin-login-form-panel {
+  padding: 58px 56px 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(86, 185, 255, 0.1), transparent 31%),
+    #ffffff;
+}
+
+.aacp-admin-login-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.aacp-admin-login-icon {
+  width: 53px;
+  height: 53px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #1684f5, #0752c7);
+  box-shadow: 0 13px 28px rgba(7, 94, 230, 0.25);
+}
+
+.aacp-admin-login-heading small {
+  color: #075ee6;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+}
+
+.aacp-admin-login-heading h2 {
+  margin: 7px 0 7px;
+  color: #10243f;
+  font-family: Manrope, Inter, sans-serif;
+  font-size: 31px;
+  letter-spacing: -0.04em;
+}
+
+.aacp-admin-login-heading p {
+  margin: 0;
+  color: #708096;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.aacp-admin-login-form {
+  margin-top: 31px;
+  display: grid;
+  gap: 18px;
+}
+
+.aacp-admin-login-form > label {
+  display: grid;
+  gap: 8px;
+}
+
+.aacp-admin-login-form > label > span {
+  color: #2a405d;
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.aacp-admin-login-input {
+  min-height: 51px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #7890aa;
+  border: 1px solid #d7e1ed;
+  border-radius: 13px;
+  background: #ffffff;
+  transition: 0.22s ease;
+}
+
+.aacp-admin-login-input:focus-within {
+  color: #075ee6;
+  border-color: #4d9cf3;
+  box-shadow: 0 0 0 4px rgba(7, 94, 230, 0.1);
+}
+
+.aacp-admin-login-input input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  color: #14243a;
+  background: transparent;
+  font-size: 11px;
+}
+
+.aacp-admin-login-input input::placeholder {
+  color: #9aa6b5;
+}
+
+.aacp-admin-login-input > button {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  color: #71859d;
+  border: 0;
+  border-radius: 9px;
+  background: #f1f6fc;
+}
+
+.aacp-admin-login-input > button:hover {
+  color: #075ee6;
+  background: #e7f2ff;
+}
+
+.aacp-admin-login-error {
+  min-height: 44px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #b82f40;
+  border: 1px solid #f1bac1;
+  border-radius: 11px;
+  background: #fff1f3;
+  font-size: 9px;
+  font-weight: 700;
+  animation: aacpAdminErrorIn 0.25s ease both;
+}
+
+.aacp-admin-login-submit {
+  min-height: 51px;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: #ffffff;
+  border: 0;
+  border-radius: 13px;
+  background: linear-gradient(135deg, #1686ff, #0754d2);
+  box-shadow: 0 14px 30px rgba(7, 94, 230, 0.27);
+  font-size: 11px;
+  font-weight: 850;
+  transition: 0.22s ease;
+}
+
+.aacp-admin-login-submit svg:last-child {
+  margin-left: auto;
+}
+
+.aacp-admin-login-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 35px rgba(7, 94, 230, 0.34);
+}
+
+.aacp-admin-login-submit:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
+.aacp-admin-login-spinner {
+  width: 17px;
+  height: 17px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: aacpAdminLoginSpin 0.75s linear infinite;
+}
+
+.aacp-admin-login-security {
+  margin-top: 24px;
+  padding-top: 19px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #8190a2;
+  border-top: 1px solid #e6ebf2;
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.aacp-admin-login-security svg {
+  color: #2a8cea;
+}
+
+/* User-side blue colour refresh for dashboard content only */
+.aacp-admin-shell {
+  background:
+    radial-gradient(circle at 90% 0%, rgba(86, 185, 255, 0.08), transparent 24%),
+    #f4f7fb;
+}
+
+.aacp-admin-header-copy > div > span {
+  color: var(--aacp-project-blue);
+}
+
+.aacp-admin-refresh {
+  background: linear-gradient(135deg, #1685ff, #0754d2);
+  box-shadow: 0 12px 25px rgba(7, 94, 230, 0.22);
+}
+
+.aacp-admin-refresh:hover {
+  box-shadow: 0 16px 30px rgba(7, 94, 230, 0.3);
+}
+
+.aacp-admin-update-row {
+  color: #486682;
+  border-color: #d6e8fb;
+  background: linear-gradient(135deg, #f2f8ff, #ffffff);
+}
+
+.aacp-admin-panel-heading > span {
+  background: linear-gradient(135deg, #1684f5, #0752c4);
+}
+
+.aacp-admin-section-kicker {
+  color: var(--aacp-project-blue);
+}
+
+.aacp-admin-calendar-grid > button.is-selected {
+  box-shadow: inset 0 0 0 2px var(--aacp-project-blue);
+  background: #f1f7ff;
+}
+
+.aacp-admin-demand-track i {
+  background: linear-gradient(90deg, #075ee6, #56b9ff);
+}
+
+.aacp-admin-modal > header > div > span {
+  color: var(--aacp-project-blue);
+}
+
+.aacp-admin-modal-summary {
+  background:
+    radial-gradient(circle at 90% 0, rgba(86, 185, 255, 0.28), transparent 32%),
+    linear-gradient(135deg, #0b3f7c, #031a38);
+}
+
+.aacp-admin-modal-summary > span,
+.aacp-admin-modal-summary strong {
+  color: #75c1ff;
+}
+
+.aacp-admin-payment-proof {
+  border-color: #cfe1f6;
+  background: #f2f8ff;
+}
+
+.aacp-admin-payment-proof > div {
+  color: #075ee6;
+}
+
+/* Redesigned statistics cards */
+.aacp-admin-stat-card {
+  min-height: 182px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0;
+  border: 1px solid var(--stat-border);
+  border-radius: 21px;
+  background:
+    radial-gradient(circle at 100% 0%, var(--stat-glow), transparent 37%),
+    linear-gradient(145deg, #ffffff 0%, var(--stat-surface) 100%);
+  box-shadow:
+    0 15px 38px rgba(3, 45, 98, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.aacp-admin-stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 20px;
+  left: 20px;
+  height: 4px;
+  border-radius: 0 0 999px 999px;
+  background: linear-gradient(90deg, var(--stat-primary), var(--stat-secondary));
+}
+
+.aacp-admin-stat-card::after {
+  display: none;
+}
+
+.aacp-admin-stat-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--stat-hover-border);
+  box-shadow:
+    0 22px 48px rgba(3, 45, 98, 0.13),
+    inset 0 1px 0 #ffffff;
+}
+
+.aacp-admin-stat-card-top {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.aacp-admin-stat-label {
+  color: #405572;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.aacp-admin-stat-icon {
+  width: 43px;
+  height: 43px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  border-radius: 13px;
+  background: linear-gradient(135deg, var(--stat-primary), var(--stat-secondary));
+  box-shadow: 0 10px 22px var(--stat-shadow);
+}
+
+.aacp-admin-stat-value-row {
+  margin-top: 22px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.aacp-admin-stat-value-row strong {
+  margin: 0;
+  display: block;
+  color: #10243f;
+  font-family: Manrope, Inter, sans-serif;
+  font-size: 39px;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.aacp-admin-stat-value-row strong.is-money {
+  font-size: clamp(24px, 2.5vw, 33px);
+}
+
+.aacp-admin-stat-signal {
+  height: 38px;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.aacp-admin-stat-signal i {
+  width: 5px;
+  display: block;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--stat-secondary), var(--stat-primary));
+  opacity: 0.75;
+}
+
+.aacp-admin-stat-signal i:nth-child(1) {
+  height: 13px;
+}
+
+.aacp-admin-stat-signal i:nth-child(2) {
+  height: 24px;
+}
+
+.aacp-admin-stat-signal i:nth-child(3) {
+  height: 35px;
+}
+
+.aacp-admin-stat-caption {
+  margin: 13px 0 0;
+  color: #75849a;
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.aacp-admin-stat-decoration {
+  width: 95px;
+  height: 95px;
+  position: absolute;
+  right: -47px;
+  bottom: -50px;
+  border: 16px solid var(--stat-decoration);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.aacp-admin-stat-card.tone-orange {
+  --stat-primary: #075ee6;
+  --stat-secondary: #4dafff;
+  --stat-surface: #f2f8ff;
+  --stat-glow: rgba(86, 185, 255, 0.18);
+  --stat-border: #d7e8fb;
+  --stat-hover-border: #a9cff8;
+  --stat-shadow: rgba(7, 94, 230, 0.2);
+  --stat-decoration: rgba(7, 94, 230, 0.08);
+}
+
+.aacp-admin-stat-card.tone-green {
+  --stat-primary: #0a55c7;
+  --stat-secondary: #73c5ff;
+  --stat-surface: #edf7ff;
+  --stat-glow: rgba(70, 169, 255, 0.18);
+  --stat-border: #d1e5fa;
+  --stat-hover-border: #9cc8f4;
+  --stat-shadow: rgba(10, 85, 199, 0.19);
+  --stat-decoration: rgba(10, 85, 199, 0.075);
+}
+
+.aacp-admin-stat-card.tone-red {
+  --stat-primary: #143f7b;
+  --stat-secondary: #4a9cf2;
+  --stat-surface: #f2f6fc;
+  --stat-glow: rgba(74, 156, 242, 0.16);
+  --stat-border: #d7e2ef;
+  --stat-hover-border: #afc8e4;
+  --stat-shadow: rgba(20, 63, 123, 0.18);
+  --stat-decoration: rgba(20, 63, 123, 0.07);
+}
+
+.aacp-admin-stat-card.tone-blue {
+  --stat-primary: #031a38;
+  --stat-secondary: #0c68d9;
+  --stat-surface: #edf4fc;
+  --stat-glow: rgba(7, 94, 230, 0.14);
+  --stat-border: #d4e0ee;
+  --stat-hover-border: #a9c4e2;
+  --stat-shadow: rgba(3, 26, 56, 0.22);
+  --stat-decoration: rgba(3, 26, 56, 0.065);
+}
+
+/* Extra responsive safeguards */
+@media (max-width: 1024px) {
+  .aacp-admin-login-shell {
+    grid-template-columns: minmax(0, 0.9fr) minmax(390px, 1.1fr);
+  }
+
+  .aacp-admin-login-visual {
+    padding: 40px 34px;
+  }
+
+  .aacp-admin-login-form-panel {
+    padding: 48px 38px 40px;
+  }
+}
+
+@media (max-width: 820px) {
+  .aacp-admin-login-page {
+    padding: 18px;
+  }
+
+  .aacp-admin-login-shell {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    border-radius: 24px;
+  }
+
+  .aacp-admin-login-visual {
+    padding: 30px;
+  }
+
+  .aacp-admin-login-visual > img {
+    width: 105px;
+    height: 64px;
+  }
+
+  .aacp-admin-login-kicker {
+    margin-top: 18px;
+  }
+
+  .aacp-admin-login-visual h1 {
+    max-width: 620px;
+    margin-top: 16px;
+    font-size: clamp(29px, 7vw, 40px);
+  }
+
+  .aacp-admin-login-features {
+    margin-top: 24px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .aacp-admin-login-features > div {
+    min-height: 92px;
+    align-items: flex-start;
+  }
+
+  .aacp-admin-login-form-panel {
+    padding: 36px 30px 30px;
+  }
+}
+
+@media (max-width: 680px) {
+  .aacp-admin-login-page {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .aacp-admin-login-shell {
+    width: 100%;
+    min-height: 100svh;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .aacp-admin-login-visual {
+    padding: 25px 21px 28px;
+  }
+
+  .aacp-admin-login-visual > p {
+    font-size: 10px;
+  }
+
+  .aacp-admin-login-features {
+    grid-template-columns: 1fr;
+  }
+
+  .aacp-admin-login-features > div {
+    min-height: 58px;
+  }
+
+  .aacp-admin-login-form-panel {
+    padding: 31px 21px 27px;
+  }
+
+  .aacp-admin-login-heading h2 {
+    font-size: 27px;
+  }
+
+  .aacp-admin-stat-card {
+    min-height: 165px;
+  }
+
+  .aacp-admin-stat-value-row {
+    margin-top: 17px;
+  }
+
+  .aacp-admin-stat-value-row strong {
+    font-size: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .aacp-admin-sidebar {
+    width: min(86vw, 290px);
+  }
+
+  .aacp-admin-page-header h1 {
+    font-size: 27px;
+  }
+
+  .aacp-admin-page-header p {
+    font-size: 11px;
+  }
+
+  .aacp-admin-panel-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .aacp-admin-text-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .aacp-admin-stat-card {
+    padding: 18px;
+  }
+
+  .aacp-admin-login-heading {
+    align-items: center;
+  }
+
+  .aacp-admin-login-icon {
+    width: 47px;
+    height: 47px;
+  }
+
+  .aacp-admin-login-form {
+    margin-top: 25px;
+  }
+}
+
+@keyframes aacpAdminLoginIn {
+  from {
+    opacity: 0;
+    transform: translateY(26px) scale(0.975);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes aacpAdminErrorIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aacpAdminLoginSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Statistics specificity safeguards for the redesigned markup */
+.aacp-admin-stat-card .aacp-admin-stat-label {
+  color: #405572;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.aacp-admin-stat-card .aacp-admin-stat-icon {
+  color: #ffffff;
+  font-size: inherit;
+}
+
+.aacp-admin-stat-card .aacp-admin-stat-signal {
+  color: inherit;
+  font-size: inherit;
+}
+
+.aacp-admin-stat-card .aacp-admin-stat-caption {
+  margin: 13px 0 0;
+  color: #75849a;
+  font-size: 9px;
+  font-weight: 400;
+  line-height: 1.55;
+}

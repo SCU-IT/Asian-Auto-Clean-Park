@@ -52,7 +52,7 @@ const services = [
     id: 1,
     title: "Oil Change",
     description: "High quality oil change service for smooth performance.",
-    image: "/assets/service-oil.jpg",
+    image: "/assets/oil-change.jpg",
     icon: Wrench,
     price: 8500,
   },
@@ -61,7 +61,7 @@ const services = [
     title: "Brake Service",
     description:
       "Ensure your safety with our expert brake inspection & repair.",
-    image: "/assets/service-brakes.jpg",
+    image: "/assets/brake-service.jpg",
     icon: CircleCheck,
     price: 12000,
   },
@@ -69,7 +69,7 @@ const services = [
     id: 3,
     title: "Engine Diagnostics",
     description: "Advanced scanning & diagnostics for all vehicle problems.",
-    image: "/assets/service-diagnostics.jpg",
+    image: "/assets/engine-diagnostics.jpg",
     icon: Gauge,
     price: 5000,
   },
@@ -77,7 +77,7 @@ const services = [
     id: 4,
     title: "AC Service",
     description: "Keep your drive cool with our AC check & regular service.",
-    image: "/assets/service-ac.jpg",
+    image: "/assets/ac-service.jpg",
     icon: AirVent,
     price: 10000,
   },
@@ -86,7 +86,7 @@ const services = [
     title: "Wheel Alignment",
     description:
       "Precise wheel alignment for better handling & longer tyre life.",
-    image: "/assets/service-alignment.jpg",
+    image: "/assets/wheel-alignment.jpg",
     icon: SlidersHorizontal,
     price: 6500,
   },
@@ -158,53 +158,59 @@ const services = [
 const products = [
   {
     id: 1,
-    name: "Castrol EDGE 5W-30 Fully Synthetic Engine Oil 4L",
+    name: "Castrol MAGNATEC A5 5W-30 Engine Oil 4L",
     image: "/assets/product-castrol.png",
-    price: 49.99,
-    oldPrice: 56.99,
+    price: 27400,
+    oldPrice: 30110,
     reviews: 125,
   },
   {
     id: 2,
-    name: "Mobil 1 Extended Performance 5W-30 4L",
+    name: "Mobil Super Friction Fighter 5W-30 Engine Oil 4L",
     image: "/assets/product-mobil.png",
-    price: 44.99,
-    oldPrice: 54.99,
+    price: 13930,
+    oldPrice: 15500,
     reviews: 98,
   },
   {
     id: 3,
-    name: "Prestone All Vehicles Antifreeze/Coolant 3.78L",
+    name: "Prestone All Vehicles Antifreeze/Coolant 4L",
     image: "/assets/product-prestone.png",
-    price: 19.99,
-    oldPrice: 24.99,
+    price: 5550,
+    oldPrice: 6590,
     reviews: 87,
   },
   {
     id: 4,
     name: "Brembo DOT 4 Brake Fluid 500ml",
     image: "/assets/product-brembo.png",
-    price: 12.99,
-    oldPrice: 16.99,
+    price: 3750,
+    oldPrice: 4250,
     reviews: 76,
   },
   {
     id: 5,
     name: "Bosch Premium Oil Filter 1 Pc",
     image: "/assets/product-bosch.png",
-    price: 8.99,
-    oldPrice: 11.99,
+    price: 2850,
+    oldPrice: 3200,
     reviews: 112,
   },
   {
     id: 6,
-    name: "Amaron Hi-Life Car Battery SSB24L",
+    name: "Amaron 46B24 R/L GO Car Battery 45Ah",
     image: "/assets/product-battery.png",
-    price: 89.99,
-    oldPrice: 109.99,
+    price: 28454.25,
+    oldPrice: 34490,
     reviews: 83,
   },
 ];
+
+const formatLKR = (value) =>
+  `Rs. ${new Intl.NumberFormat("en-LK", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(Number(value || 0))}`;
 
 const processSteps = [
   {
@@ -236,23 +242,23 @@ const processSteps = [
 
 const testimonials = [
   {
-    name: "James Wilson",
-    city: "New York, USA",
-    image: "/assets/avatar-james.png",
+    name: "Saman Kumara",
+    city: "Colombo",
+    image: "/assets/R1.jpg",
     quote:
       "Excellent service and very professional staff. My car feels like new. Highly recommended!",
   },
   {
-    name: "Sarah Johnson",
-    city: "Los Angeles, USA",
-    image: "/assets/avatar-sarah.png",
+    name: "Kasuni Wijeeseekara",
+    city: "Galle",
+    image: "/assets/R2.jpg",
     quote:
       "Quick and reliable service. Transparent pricing and genuine parts. Great experience!",
   },
   {
-    name: "Michael Brown",
-    city: "Chicago, USA",
-    image: "/assets/avatar-michael.png",
+    name: "Malith Perera",
+    city: "Kandy",
+    image: "/assets/R3.jpg",
     quote: "Best service center in town! They treated my car with best care.",
   },
 ];
@@ -706,8 +712,8 @@ export default function App() {
                     <small>({product.reviews})</small>
                   </div>
                   <div className="price-row">
-                    <strong>${product.price.toFixed(2)}</strong>
-                    <del>${product.oldPrice.toFixed(2)}</del>
+                    <strong>{formatLKR(product.price)}</strong>
+                    <del>{formatLKR(product.oldPrice)}</del>
                   </div>
                   <div className="product-actions">
                     <button
@@ -1002,7 +1008,7 @@ export default function App() {
                   <img src={item.image} alt={item.name} />
                   <div className="cart-item-copy">
                     <h3>{item.name}</h3>
-                    <strong>${item.price.toFixed(2)}</strong>
+                    <strong>{formatLKR(item.price)}</strong>
                     <div className="quantity-control">
                       <button onClick={() => updateQuantity(item.id, -1)}>
                         −
@@ -1019,12 +1025,12 @@ export default function App() {
             <div className="cart-summary">
               <div>
                 <span>Subtotal</span>
-                <strong>${cartTotal.toFixed(2)}</strong>
+                <strong>{formatLKR(cartTotal)}</strong>
               </div>
               <button
                 className="button button-primary"
                 onClick={() =>
-                  showNotice("Checkout is ready for backend integration")
+                  showNotice("Checkout is ready")
                 }
               >
                 Proceed to Checkout
